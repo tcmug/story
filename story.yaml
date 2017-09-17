@@ -1,0 +1,59 @@
+---
+
+start:
+
+  description: You are in a small room with blue walls. There is a smell of rotten wood in the air.
+
+  actions:
+
+    - description: You see a small key on the floor.
+      action: Pick up the key
+      add: Key
+
+    - action: Unlock the door
+      has: Key
+      set: Door unlocked
+
+    - action: Lock the door
+      has: Key
+      condition: Door unlocked
+      unset: Door unlocked
+
+    - description: There is a rusty iron door.
+      action: Unlock door
+      condition: Key
+      set: Door unlocked
+
+    - action: "Enter door"
+      description: There is an open rusty iron door leading to another room.
+      condition: Door unlocked
+      goto: next
+
+next:
+
+  description: You are in a small room which smells of mildew. It is all painted white.
+
+  actions:
+
+    - description: There is an open rusty iron door leading back to where you came from.
+      action: Enter door
+      condition: Door unlocked
+      goto: start
+
+    - description: There is a rusty iron door in front of you.
+      action: Lock the door
+      condition: Door locked
+      set: Door locked
+
+    - description: There is a rusty iron door in front of you.
+      action: Unlock the door
+      condition: Door locked
+      unset: Door locked
+
+    - action: "Escape through the hatch"
+      description: There is a hatch on the ceiling which is open.
+      goto: hatch
+
+hatch:
+
+  description: You win!
